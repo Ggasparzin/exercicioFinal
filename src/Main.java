@@ -1,13 +1,17 @@
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.atomic.DoubleAdder;
+
 public class Main {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        int posicao = 0;
-        int posicao2 = 1;
 
         ArrayList<String> alunos = new ArrayList<>();
         ArrayList<Double> notas = new ArrayList<>();
+        ArrayList<Double> medias = new ArrayList<>();
+
+        String status = "";
 
         double soma = 0;
         double mediaTurma = 0;
@@ -31,6 +35,7 @@ public class Main {
                 case 1:
                     System.out.print("\nQuantos alunos deseja cadastrar? ");
                     int qntAlunos = scan.nextInt();
+
                     for(int i = 0; i < qntAlunos; i++){
                         System.out.println("Digite o nome do aluno: ");
                         alunos.add(scan.next());
@@ -42,6 +47,7 @@ public class Main {
                             System.out.println("Digite uma nota válida! ");
                             notas.add(scan.nextDouble());
                         }
+                        soma = notas.getLast();
 
                         System.out.print("Digite a segunda nota de " + alunos.getLast() + ": ");
                         notas.add(scan.nextDouble());
@@ -50,57 +56,35 @@ public class Main {
                             System.out.println("Digite uma nota válida! ");
                             notas.add(scan.nextDouble());
                         }
+                        soma += notas.getLast();
+                        medias.add(soma / 2);
+                        System.out.println("DEV soma: " + soma);
 
                         System.out.println("");
 
                     }
-
-                    System.out.println("Dev - Alunos: " + alunos + " - Notas: " + notas );
                     break;
+
                 case 2:
                     System.out.println("#### NOTAS DOS ALUNOS ####");
 
-                    for(int i = 0; i <= alunos.size(); i += 2){
-                        if(i == 0){
-                            System.out.println("\nAluno: " + alunos.get(i) + " Média: " + (notas.get(i) + notas.get(i + 1)) / 2);
-                            //formatar depois
-                        }
-                        else{
-                            System.out.println("Aluno: " + alunos.get(i -= 1) + " Média: " + (notas.get(i) + notas.get(i + 1)) / 2);
-                            //formatar depois
-                        }
+                    for(int i = 0; i <= alunos.size(); i++){
+                        if(medias.get(i) >= 7) {
+                        status = "Aprovado";
+                    }
+                    else if(medias.get(i) >= 5 && medias.get(i) < 7){
+                        status = "Recuperacao";
+                    }
+                    else{
+                        status = "Reprovado";
+                    }
+                        System.out.println("Aluno: " + alunos.getFirst() + " - Média: " + medias.get(i) + " Status: " + status);
+
                     }
                     break;
                 case 3:
                     System.out.println("#### RESULTADO DA TURMA ####");
 
-
-            }
-
-//
-//
-//                if(medias[i] >= 7) {
-//                    status[i] = "Aprovado";
-//                }
-//                else if(medias[i] >= 5 && medias[i] < 7){
-//                    status[i] = "Recuperacao";
-//                }
-//                else{
-//                    status[i] = "Reprovado";
-//                }
-//            }
-//
-//            System.out.println("Resultado:\n");
-
-//            for(int i = 0; i < alunos; i++) {
-//                System.out.print(nomes[i] + " - ");
-//                System.out.printf("Media: %.1f - Status %s \n", medias[i], status[i]);
-//            }
-//
-//            for(double media : medias){
-//                somaMedia += media;
-//            }
-//
 //            mediaTurma = somaMedia / alunos;
 //                System.out.printf("\nMédia da turma: %.1f", mediaTurma);
 //
